@@ -1,0 +1,5 @@
+<div class="alert-success" th:fragment="success(alert)" th:object="${alert}">
+    <button type="button" class="close" aria-label="Close" onclick="$(this).parent().remove();"><span aria-hidden="true">&times;</span></button>
+    <div th:text="*{title}" class="alert-header"/>
+    <div th:text="*{msg}" class="alert-body"/>
+</div>

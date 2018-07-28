@@ -1,0 +1,44 @@
+<th:block th:replace="fragments/header :: header"></th:block> 
+
+
+<main class="p-3"  th:fragment="item">
+    <span class="h2">Новый Пользователь</span>
+    <button form="newUserForm" type="submit" class="btn-action mx-3">Сохранить</button>
+    <hr style="border-color:#dadada;">
+
+
+    <form id="newUserForm" th:action="@{/users/add}" th:object="${user}" method="post" class="limiter">
+        <div class="row">
+            <div class="col-md-12 col-lg-3">
+                <div class="mb-2">
+                    <label for="name" class="input-name required">Имя</label>
+                    <input type="text" th:field="*{name}" required />                              
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="valid-message valid-error"/>                                       
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-3">
+                <div class="mb-2">
+                    <label for="email" class="input-name required">Email</label>
+                    <input type="text" th:field="*{email}" required />    
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="valid-message valid-error"/>          
+                    <label class="checkbox-wrapper">
+						<input type="checkbox" name="emailConfirm" th:checked="*{emailConfirm}" class="checkbox" />
+						<span class="my-2">почта подтверждена</span>
+					</label>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-3">
+                <div class="mb-2">
+                    <label for="" class="input-name">Статус</label>
+                  	<select name="userStatus">								
+					    <option th:each="i : ${userStatusList}" th:value="${i.id}" th:text="${i.val}" />
+					</select>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+

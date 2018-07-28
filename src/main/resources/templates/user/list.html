@@ -1,0 +1,70 @@
+<th:block th:replace="fragments/header :: header"></th:block> 
+
+
+<main class="p-2">
+    <span class="h2">Список пользователей</span>
+    <a th:href="@{users/add}" form="userForm" class="btn-action mx-3">Добавить</a>
+    <hr style="border-color:#dadada;">
+
+ 
+    <form th:action="@{/users}" method="get"> 
+        <input type="hidden" id="sort" name="sort" th:value="${sortCol + ',' + sortDir}">
+
+        <div class="table-wrap">
+            <table class="table table-border">
+                <thead>
+                    <tr>                            
+                        <th th:with="col=${'name'}, dir=${sortCol == col && sortDir == 'ASC' ? 'desc' : 'asc'}">                  
+		                   <button th:onclick="${'document.getElementById(''sort'').value=''' + col + ',' + dir + ''''}" class="btn-action">
+                           		Имя <i th:if="${sortCol == col}" th:class="'fas fa-long-arrow-alt-' + ${dir}"></i>
+                           </button>
+                        </th> 
+                    	<th th:with="col=${'email'}, dir=${sortCol == col && sortDir == 'ASC' ? 'desc' : 'asc'}"> 
+                          <div class="input-group">
+                              <button th:onclick="${'document.getElementById(''sort'').value=''' + col + ',' + dir + ''''}" class="btn-action" style="white-space:nowrap;">                              
+                              		Email <i th:if="${sortCol == col}" th:class="'fas fa-long-arrow-alt-' + ${dir}"></i>
+                              </button>
+                              <input type="text" name="SearchEmail" value="Пока не работает">
+                          </div>
+                        </th>                                                     
+                        <th>Email confirm</th>
+                        <th>                       				
+							<select name="userStatus">
+								<option value="0" selected="selected">все</option>
+							    <option th:each="i : ${userStatusList}" th:value="${i.id}" th:text="${i.val}" />
+							</select>							
+						</th>                   
+                        <th style="width:1px;white-space:nowrap;">
+                        	<button type="button" class="btn-action"><i class="fas fa-search"></i></button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+					<tr th:each="user : ${userList.content}" th:object="${user}">							
+						<td th:text="*{name}" />		
+						<td th:text="*{email}" />
+						<td>
+							<i th:if="*{emailConfirm}" style='color:#56cba6;font-size:20px;' class='fas fa-check-square'></i>							
+							<i th:unless="*{emailConfirm}" style='color:#f97979;font-size:20px;font-weight:100;' class='fas fa-square'></i>
+						</td>						
+						<td th:text="*{userStatus.val}" />											
+                       	<td style="white-space:nowrap;">
+                           <a th:href="@{'/users/' + *{id}}" class="btn-action"><i class="fas fa-pencil-alt"></i></a>
+                           <!-- <a th:href="@{'/users/del/' + *{id}}" onclick="return confirm('Данное действие необратимо. Вы уверены?');" class="btn-danger"><i class="fas fa-trash-alt"></i></a> -->
+                           <button type="button" th:data-id="*{id}" class="btn-danger"><i class="fas fa-trash-alt"></i></button>
+                       	</td>													
+					</tr>                
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Pagination -->
+        <th:block th:replace="pager/default :: default(${userList})"></th:block>
+    </form>
+</main>
+
+
+<th:block th:replace="fragments/footer :: footer"></th:block>
+
+ 

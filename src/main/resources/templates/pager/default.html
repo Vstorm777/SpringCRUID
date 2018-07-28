@@ -1,0 +1,23 @@
+<div class="pagination  my-3 text-center" th:fragment="default(pager)" th:object="${pager}">
+    <span class="mx-3">    
+        <button th:disabled="*{!hasPrevious()}" onclick="document.getElementById('page').value=0" class="btn"><i class="fas fa-angle-double-left"></i></button>
+        <button th:disabled="*{!hasPrevious()}" th:onclick="*{'document.getElementById(''page'').value=' + (number-1)}" class="btn"><i class="fas fa-angle-left"></i></button>
+        
+        <select id="page" name="page" class="mx-2" onchange="this.form.submit()">
+            <option th:each="i: *{#numbers.sequence(0, totalPages-1)}" th:value="${i}" th:text="${i+1}"  th:selected="(${pager.number == i})" />
+        </select>
+
+        <button th:disabled="*{!hasNext()}" th:onclick="*{'document.getElementById(''page'').value=' + (number+1)}" class="btn"><i class="fas fa-angle-right"></i></button>
+        <button th:disabled="*{!hasNext()}" th:onclick="*{'document.getElementById(''page'').value=' + (totalPages-1)}" class="btn"><i class="fas fa-angle-double-right"></i></button>                       
+	 </span>
+ 
+    <span class="mx-3">
+        Кол-во на странице: 
+        <span class="input-group">
+            <input id="size" type="number" max="100" name="size" th:value="*{size}" class="input-field" style="width:65px;" required placeholder="1" />
+            <button class="btn"><i class="fas fa-sync-alt"></i></button>
+        </span>
+    </span>
+
+    <span class="mx-3">Всего записей: [[*{totalElements}]]</span> 
+</div>
