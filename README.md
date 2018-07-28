@@ -12,3 +12,6 @@
 
 ### Сохранить пользователя ### 
 ![alt text](https://github.com/Vstorm777/SpringCRUID/blob/master/screen3.png)
+
+### Проверка полей ### 
+![alt text](https://github.com/Vstorm777/SpringCRUID/blob/master/screen4.png)
